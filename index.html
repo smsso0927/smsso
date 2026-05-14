@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>랜덤 배경색</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      transition: background-color 0.35s ease;
+    }
+
+    main {
+      width: min(92vw, 420px);
+      padding: 32px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    button {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #colorValue {
+      display: block;
+      margin-top: 18px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 15px;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>랜덤 배경색</h1>
+    <p>버튼을 누르면 페이지 배경색이 무작위로 바뀝니다.</p>
+    <button id="changeColorButton" type="button">배경색 바꾸기</button>
+    <span id="colorValue">#F5F7FB</span>
+  </main>
+
+  <script>
+    const button = document.getElementById("changeColorButton");
+    const colorValue = document.getElementById("colorValue");
+
+    function getRandomColor() {
+      const hex = Math.floor(Math.random() * 0xffffff)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+
+      return `#${hex}`;
+    }
+
+    button.addEventListener("click", () => {
+      const nextColor = getRandomColor();
+      document.body.style.backgroundColor = nextColor;
+      colorValue.textContent = nextColor;
+    });
+  </script>
+</body>
+</html>
