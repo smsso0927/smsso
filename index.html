@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>랜덤 배경색</title>
+  <title>두 칸 랜덤 배경색</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,35 +12,55 @@
     body {
       margin: 0;
       min-height: 100vh;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      color: #111827;
+      overflow: hidden;
+    }
+
+    .color-panel {
+      height: 50vh;
       display: grid;
       place-items: center;
-      font-family: Arial, "Noto Sans KR", sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
       transition: background-color 0.35s ease;
     }
 
-    main {
-      width: min(92vw, 420px);
-      padding: 32px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.65);
+    #topPanel {
+      background: #f97316;
+    }
+
+    #bottomPanel {
+      background: #22c55e;
+    }
+
+    .panel-label {
+      padding: 10px 16px;
       border-radius: 8px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      font-family: Consolas, Monaco, monospace;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: min(90vw, 360px);
+      padding: 22px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 8px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.2);
       backdrop-filter: blur(10px);
+      transform: translate(-50%, -50%);
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 28px;
+      margin: 0 0 16px;
+      font-size: 24px;
       line-height: 1.25;
-    }
-
-    p {
-      margin: 0 0 24px;
-      color: #4b5563;
-      line-height: 1.6;
     }
 
     button {
@@ -64,27 +84,28 @@
     button:active {
       transform: translateY(0);
     }
-
-    #colorValue {
-      display: block;
-      margin-top: 18px;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 15px;
-      color: #111827;
-    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>랜덤 배경색</h1>
-    <p>버튼을 누르면 페이지 배경색이 무작위로 바뀝니다.</p>
-    <button id="changeColorButton" type="button">배경색 바꾸기</button>
-    <span id="colorValue">#F5F7FB</span>
+  <section class="color-panel" id="topPanel" aria-label="위쪽 배경색">
+    <span class="panel-label" id="topColorValue">#F97316</span>
+  </section>
+
+  <section class="color-panel" id="bottomPanel" aria-label="아래쪽 배경색">
+    <span class="panel-label" id="bottomColorValue">#22C55E</span>
+  </section>
+
+  <main class="controls">
+    <h1>두 칸 랜덤 배경색</h1>
+    <button id="changeColorButton" type="button">색상 바꾸기</button>
   </main>
 
   <script>
     const button = document.getElementById("changeColorButton");
-    const colorValue = document.getElementById("colorValue");
+    const topPanel = document.getElementById("topPanel");
+    const bottomPanel = document.getElementById("bottomPanel");
+    const topColorValue = document.getElementById("topColorValue");
+    const bottomColorValue = document.getElementById("bottomColorValue");
 
     function getRandomColor() {
       const hex = Math.floor(Math.random() * 0xffffff)
@@ -96,9 +117,13 @@
     }
 
     button.addEventListener("click", () => {
-      const nextColor = getRandomColor();
-      document.body.style.backgroundColor = nextColor;
-      colorValue.textContent = nextColor;
+      const topColor = getRandomColor();
+      const bottomColor = getRandomColor();
+
+      topPanel.style.backgroundColor = topColor;
+      bottomPanel.style.backgroundColor = bottomColor;
+      topColorValue.textContent = topColor;
+      bottomColorValue.textContent = bottomColor;
     });
   </script>
 </body>
